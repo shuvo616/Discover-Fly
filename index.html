@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main class="main-content container">
+        <div class="booking-form">
+            <div id="booking-form-display">
+            <h3>Booking Flights</h3>
+            <div class="input-group">
+                <label for="">Flying From</label>
+                <input class="inp-style" type="text" name="" placeholder="Dhaka, Bangladesh">
+            </div>
+            <div class="input-group">
+                <label for="">Flying To</label>
+                <input class="inp-style" type="text" name="" placeholder="New York, United States">
+            </div>
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+            <div class="input-group f-class">
+                <div>
+                    <label for="">First Class ($150)</label>
+                    <input id="firstQuantity" class="inp-style inp-width" type="text" name="" value="0">
+                </div>
+                <div class="plus-minus-btn">
+                    <button class="btn btn-default mybutton" onclick="ticketHandel('first',true)"><i class="fas fa-plus">+</i></button>
+                    <button class="btn btn-default mybutton" onclick="ticketHandel('first',false)"><i class="fas fa-minus">-</i></button>
+                </div>
+            </div>
+            
+            <div class="input-group f-class">
+                <div>
+                    <label for="">Economy ($100)</label>
+                    <input id="economyQuantity" class="inp-style inp-width" type="text" name="" value="0">
+                </div>
+                <div class="plus-minus-btn">
+                    <!-- <p> <span>+</span> <span>-</span> </p> -->
+                    <button class="btn btn-default mybutton" onclick="ticketHandel('economy',true)"><i class="fas fa-plus">+</i></button>
+                    <button class="btn btn-success mybutton" onclick="ticketHandel('economy',false)"><i class="fas fa-minus">-</i></button>
+                </div>
+            </div>
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p>$<span id ="ticketPrice">0</span></p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p>$<span id="taxAdd">0</span></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p>$<span id="totalCost" >0</span></p>
+                    </div>
+                </div>
+            </div>
+            <button id="bookNow" class="btn-style">Book Now</button>
+        </div>
+        <!-- Show output table when clicked on BookNow button -->
+        <div id="booking-info">
+            <table class="mytable">
+                <tr>
+                    <th>Ticket Booked</th>
+                    <th>Quantity</th>
+                    <th>Total Cost</th>
+                </tr>
+                <tr>
+                    <td>First Class</td>
+                    <td><span id="tableFirstQuantity">0</span></td>
+                    <td>$<span id="tableFirstCostInfo">0</span></td>
+                </tr>
+                <tr>
+                    <td>Economy Class</td>
+                    <td><span id="tableEconomyQuantity">0</span></td>
+                    <td>$<span id="tableEconomyCostInfo">0</span></td>
+                </tr>
+                <tr>
+                    <td>Tax</td>
+                    <td></td>
+                    <td>$<span id="tableTax"></span></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td></td>
+                    <td>$<span id ="tableTotalCost"></span></td>
+                </tr>
+            </table>
+        </div>
+        </div>
+        <div class="booking-content">
+            <h1>discover <br> around the world</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicingelit. Provident voluptatibus quam fuga laborumalias veniam libero autem quasi maxime ullam vero nama imi dolor, architecto ab facilis eaque deserunt nobise voluptatibus quam</p>
+        </div>
+    </section>
+
+    <!--Thank You-->
+    <!-- Js code -->
+    <script>
+    // Ticket Handel Function
+    function ticketHandel(ticketType, isIncrease){
+        const quantityNumber = document.getElementById(ticketType + 'Quantity');
+        const quantityCount  = parseInt(quantityNumber.value);
+        let newQuantity = quantityCount;
+        if(isIncrease == true){
+            newQuantity = quantityCount + 1;  
+        }
+        if(isIncrease == false && quantityCount > 0){
+            newQuantity = quantityCount - 1;  
+        }
+        quantityNumber.value = newQuantity;
+        ticketCalculation();
+    }
+    // calculate ticket price
+    function ticketCalculation(){
+        const firstClassNumber = parseInt(document.getElementById('firstQuantity').value);
+        const economyClassNumber = parseInt(document.getElementById('economyQuantity').value);
+        const ticketCost =  firstClassNumber * 150 + economyClassNumber * 100;
+        document.getElementById('ticketPrice').innerText = ticketCost;
+        const taxCost = ticketCost * 0.1;
+        document.getElementById('taxAdd').innerText = taxCost;
+        const totalCost = ticketCost + taxCost;
+        document.getElementById('totalCost').innerText = totalCost;
+    }
+    // Output the result into table
+    document.getElementById('bookNow').addEventListener('click',function(){
+    const totalCost = parseInt(document.getElementById('totalCost').innerText);
+    if(totalCost == 0){
+        alert("Please enter ticket quantity");
+    }else{
+    const firstQuantity = parseInt(document.getElementById('firstQuantity').value);
+    document.getElementById('tableFirstQuantity').innerText = firstQuantity;
+    const tableFirstCost = firstQuantity * 150;
+    document.getElementById('tableFirstCostInfo').innerText = tableFirstCost;
+
+    const economyQuantity = parseInt(document.getElementById('economyQuantity').value);
+    document.getElementById('tableEconomyQuantity').innerText = economyQuantity;
+    const tableEconomyCost = economyQuantity * 100;
+    document.getElementById('tableEconomyCostInfo').innerText = tableEconomyCost;
+
+    const taxAdd = parseInt(document.getElementById('taxAdd').innerText);
+    document.getElementById('tableTax').innerText = taxAdd;
+    const totalCost = parseInt(document.getElementById('totalCost').innerText);
+    document.getElementById('tableTotalCost').innerText = totalCost;
+    // Block the booking form and display output table
+    const bookingFormDisplay = document.getElementById('booking-form-display');
+    bookingFormDisplay.style.display = "none";
+    const bookingInfo = document.getElementById('booking-info');
+    bookingInfo.style.display = "block";
+    }
+});
+    </script>
+</body>
+
+</html>
