@@ -153,10 +153,10 @@
             newQuantity = quantityCount - 1;  
         }
         quantityNumber.value = newQuantity;
-        ticketCalculation();
+        ticketPriceCalculation();
     }
     // calculate ticket price
-    function ticketCalculation(){
+    function ticketPriceCalculation(){
         const firstClassNumber = parseInt(document.getElementById('firstQuantity').value);
         const economyClassNumber = parseInt(document.getElementById('economyQuantity').value);
         const ticketCost =  firstClassNumber * 150 + economyClassNumber * 100;
